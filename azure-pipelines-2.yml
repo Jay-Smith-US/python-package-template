@@ -12,8 +12,19 @@ pool:
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
-
 - script: |
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
+- task: PythonScript@0
+  inputs:
+    scriptSource: 'inline'
+    script: |
+      import subprocess
+      
+      def install_package(package):
+          subprocess.check_call(["pip", "install", package])
+      
+      install_package("twine")
+      install_package("keyring")
+      install_package("artifacts-keyring")
